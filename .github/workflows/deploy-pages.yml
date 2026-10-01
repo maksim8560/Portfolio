@@ -10,6 +10,7 @@ permissions:
   pages: write
   id-token: write
 
+# Быстрые пуши не должны копиться в очередь: последний коммит — и есть прод.
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -21,14 +22,38 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      # Собирать нечего: коммитим готовые файлы как есть.
       - uses: actions/checkout@v4
 
-      - uses: actions/configure-pages@v5
+      # Pages мог быть ещё не включён — включаем сами, чтобы деплой не зависел
+      # от того, кликнул ли кто-нибудь Settings → Pages. 409 = уже включён.
+      - name: Включить Pages, если не включён
+        continue-on-error: true
+        run: |
+          code=$(curl -sS -o /tmp/pages.json -w '%{http_code}' \
+            -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "$GITHUB_API_URL/repos/${{ github.repository }}/pages" \
+            -d '{"build_type":"workflow"}')
+          echo "POST /pages -> $code"
+          cat /tmp/pages.json
+
+      - name: Настроить Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      # Собирать нечего: копируем пять файлов сайта в отдельную папку,
+      # чтобы в артефакт не попали README, .github и прочее.
+      - name: Подготовить статику
+        run: |
+          mkdir -p _site
+          cp index.html styles.css app.js content.js .nojekyll _site/
+          ls -la _site
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
 
       - id: deployment
         uses: actions/deploy-pages@v4
