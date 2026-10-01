@@ -24,20 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Pages мог быть ещё не включён — включаем сами, чтобы деплой не зависел
-      # от того, кликнул ли кто-нибудь Settings → Pages. 409 = уже включён.
-      - name: Включить Pages, если не включён
-        continue-on-error: true
-        run: |
-          code=$(curl -sS -o /tmp/pages.json -w '%{http_code}' \
-            -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            "$GITHUB_API_URL/repos/${{ github.repository }}/pages" \
-            -d '{"build_type":"workflow"}')
-          echo "POST /pages -> $code"
-          cat /tmp/pages.json
-
       - name: Настроить Pages
         uses: actions/configure-pages@v5
         with:

@@ -3,31 +3,33 @@
    --------------------------------------------------------------------------
    ПРАВИТЕЛЬНОЕ МЕСТО ДЛЯ ССЫЛОК НА ДЕМО → см. LINKS ниже.
    Просто вставь URL в поле, и кнопка появится сама. Пустая строка = кнопка скрыта.
+
+   Ссылки на исходный код намеренно НЕ выведены на страницу — наружу
+   смотрят только живые проекты.
    ========================================================================== */
 
 const LINKS = {
-  github:   'https://github.com/maksim8560',
-  email:    'mailto:savin.maksim952@yandex.ru',
+  // Discord: либо ссылка на профиль — тогда кнопка обычная,
+  // либо пусто — тогда кнопка копирует ник в буфер обмена.
+  discord:  '',
+  discordHandle: 'MaxDiWay',
 
-  discord:  '',   // ← сюда вставь ссылку на профиль: https://discord.gg/xxxx
   telegram: '',   // ← https://t.me/...
 
   resume:   '',   // ← ссылка на PDF резюме
 
   aura: {
     demo:    'https://aura-messenger-q5yk.onrender.com/',   // ← живой адрес Aura
-    repo:    'https://github.com/maksim8560/Aura-',
     apk:     '',   // ← ссылка на APK, если хочешь кнопку «Скачать APK»
+    // repo:  'https://github.com/maksim8560/Aura-',
   },
 
   sonora: {
     demo:    'https://maksim8560.github.io/music-app/',   // ← живой адрес Sonora
-    repo:    'https://github.com/maksim8560/music-app',
   },
 
   filedropper: {
     demo:    'https://filedropper-api.sonora-online.workers.dev/#/',   // ← живой адрес FileDropper
-    repo:    'https://github.com/maksim8560/FileDropper',
   },
 };
 
@@ -52,7 +54,6 @@ ru: {
   'hero.title': 'Делаю продукты,<br />которые <em>честно работают</em>',
   'hero.lead': 'Шифрование, которое действительно шифрует. Загрузки, которые не упираются в лимит платформы. Интерфейс, который не притворяется, что знает больше, чем знает.',
   'hero.cta.work': 'Смотреть проекты',
-  'hero.cta.github': 'GitHub',
   'hero.cta.resume': 'Резюме',
   'hero.console': 'рабочий журнал',
 
@@ -105,10 +106,11 @@ ru: {
   'ct.kicker': '04 — Контакты',
   'ct.title': 'Давайте поговорим',
   'ct.lead': 'Открыт к задачам, где есть нетривиальная инженерная часть: шифрование, realtime, медиапайплайны, деплой на бесплатных тарифах.',
-  'ct.github': 'github.com/maksim8560',
   'ct.discord': 'Discord MaxDiWay',
   'ct.telegram': 'Telegram',
   'ct.email': 'savin.maksim952@yandex.ru',
+
+  'ct.copied': 'Ник скопирован',
 
   'footer.note': 'Сделано без фреймворков и сборщиков — так же, как проекты на этой странице.',
   'footer.russian': 'Русский / English',
@@ -136,7 +138,6 @@ en: {
   'hero.title': 'I build products that<br /><em>honestly work</em>',
   'hero.lead': 'Encryption that actually encrypts. Uploads that never hit a platform limit. An interface that never pretends to know more than it does.',
   'hero.cta.work': 'See the work',
-  'hero.cta.github': 'GitHub',
   'hero.cta.resume': 'Résumé',
   'hero.console': 'work log',
 
@@ -189,10 +190,11 @@ en: {
   'ct.kicker': '04 — Contact',
   'ct.title': 'Let\'s talk',
   'ct.lead': 'Open to work where the engineering is the interesting part: encryption, realtime, media pipelines, deploying on free tiers.',
-  'ct.github': 'github.com/maksim8560',
   'ct.discord': 'Discord MaxDiWay',
   'ct.telegram': 'Telegram',
   'ct.email': 'savin.maksim952@yandex.ru',
+
+  'ct.copied': 'Handle copied',
 
   'footer.note': 'Built with no frameworks and no bundler — same as the projects on this page.',
   'footer.russian': 'Русский / English',

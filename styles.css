@@ -149,8 +149,11 @@ code {
 
 .stage { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: var(--bg); }
 
-/* Анимируются только opacity и transform — оба на композиторе.
-   Сам blur(30px) не пересчитывается покачиванием. */
+/* Фон статичен. Пока mesh «дышал», все 19 панелей с backdrop-filter
+   пересчитывали своё размытие каждый кадр — это readback подложки плюс
+   blur на элемент, и это самая дорогая вещь на странице.
+   Теперь фон рисуется один раз и лежит слоем, поэтому анимировать его
+   незачем. Живость дают зерно и кольцо у точки в hero. */
 .mesh {
   position: absolute; inset: -14%;
   background:
@@ -158,14 +161,8 @@ code {
     radial-gradient(32% 32% at 78% 14%, var(--mesh-2), transparent 62%),
     radial-gradient(42% 42% at 82% 78%, var(--mesh-3), transparent 62%),
     radial-gradient(40% 40% at 24% 84%, var(--mesh-4), transparent 62%);
-  filter: blur(30px) saturate(140%);
-  will-change: opacity, transform;
-  opacity: .85;
-  animation: breathe 24s var(--ease) infinite alternate;
-}
-@keyframes breathe {
-  from { opacity: .72; transform: scale(1.04); }
-  to   { opacity: 1;   transform: scale(1.12); }
+  transform: scale(1.06);   /* чтобы края градиентов не попали в кадр */
+  opacity: .88;
 }
 
 .veil { position: absolute; inset: 0; background: var(--veil); }
@@ -194,15 +191,17 @@ code {
   position: relative;
 }
 
-/* Второй источник света — specular кромка */
+/* Второй источник света — мягкая подсветка по диагонали.
+   Изначально здесь стоял mix-blend-mode: overlay, но он заставляет браузер
+   поднимать отдельный слой и прогонять композитинг для каждой из 19 панелей.
+   Обычный градиент выглядит так же и не стоит ничего. */
 .glass::before {
   content: "";
   position: absolute; inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(150deg, var(--highlight), transparent 42%);
-  opacity: .16;
-  mix-blend-mode: overlay;
+  background: linear-gradient(150deg, var(--highlight), transparent 46%);
+  opacity: .5;
 }
 
 @supports not (backdrop-filter: blur(1px)) {
@@ -339,6 +338,23 @@ code {
 .btn-ghost { background: none; box-shadow: none; border-color: transparent; }
 .btn-ghost:hover { background: var(--fill-soft); }
 
+/* Discord-кнопка без ссылки: копирует ник, поэтому подсвечивается иначе */
+.btn.is-copy { position: relative; }
+.btn.is-copy::after {
+  content: "";
+  position: absolute; right: 15px; top: 50%;
+  width: 13px; height: 13px; margin-top: -6.5px;
+  background: var(--accent-a);
+  opacity: .55;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+}
+.btn.is-done {
+  background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+  color: var(--accent-ink);
+  border-color: transparent;
+}
+.btn.is-done::after { opacity: 0; }
+
 @media (prefers-reduced-motion: reduce) {
   .btn:hover { transform: none; }
 }
@@ -362,15 +378,24 @@ code {
   font-size: .8rem; font-weight: 550; letter-spacing: .06em;
   text-transform: uppercase; color: var(--text-3);
 }
+/* Кольцо — отдельный слой, который растёт и гаснет. Раньше анимировался
+   box-shadow, а он перерисовывает элемент каждый кадр; transform и opacity
+   живут на композиторе и стоят почти ноль. */
 .dot {
+  position: relative;
   width: 7px; height: 7px; border-radius: 50%;
   background: var(--accent-a);
-  box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent-a) 22%, transparent);
-  animation: pulse 2.6s var(--ease) infinite;
 }
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent-a) 22%, transparent); }
-  50%      { box-shadow: 0 0 0 8px color-mix(in oklab, var(--accent-a) 4%, transparent); }
+.dot::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: var(--accent-a);
+  animation: ping 2.6s var(--ease) infinite;
+}
+@keyframes ping {
+  from { transform: scale(1);   opacity: .34; }
+  to   { transform: scale(2.2); opacity: 0;   }
 }
 
 .hero-title {
@@ -417,8 +442,8 @@ code {
 .log-line {
   display: flex; gap: 10px;
   color: var(--text-3);
-  animation: logIn .4s var(--ease) both;
 }
+/* появление только у свежей строки — иначе весь блок мигает раз в цикл */
 .log-line b { color: var(--accent-a); font-weight: 400; flex: none; }
 .log-line span { color: var(--text-2); }
 .log-line.is-new { animation: logIn .45s var(--ease) both; }
@@ -673,6 +698,29 @@ code {
 }
 .footer-meta { font-family: var(--font-mono); font-size: .76rem; }
 
+/* ============================ РЕЖИМ ЭКОНОМИИ ============================ */
+
+/* Включается скриптом, если устройство не тянет (см. perfTier в app.js).
+   Проверка честная: скрипт меряет реальные кадры и понижает уровень
+   только если медиана выше порога. Ничего не отключается «на всякий случай». */
+:root[data-perf="lite"] {
+  --glass-blur: 10px;
+}
+
+:root[data-perf="lite"] .glass {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: linear-gradient(180deg,
+              color-mix(in oklab, var(--glass-bg) 100%, var(--bg-2)),
+              color-mix(in oklab, var(--glass-bg2) 100%, var(--bg-2)));
+}
+:root[data-perf="lite"] .glass::before { display: none; }
+:root[data-perf="lite"] .grain { display: none; }
+:root[data-perf="lite"] .project::after { display: none; }
+:root[data-perf="lite"] .reveal { opacity: 1; transform: none; transition: none; }
+:root[data-perf="lite"] .dot::after { display: none; }
+:root[data-perf="lite"] .btn:hover { transform: none; }
+
 /* ============================ ПОЯВЛЕНИЕ ============================ */
 
 .reveal {
@@ -684,8 +732,7 @@ code {
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
-  .mesh { animation: none; }
-  .dot, .cursor { animation: none; }
+  .dot::after, .cursor { animation: none; display: none; }
   .log-line, .log-line.is-new { animation: none; }
   * { scroll-behavior: auto !important; }
 }

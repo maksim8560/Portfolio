@@ -65,8 +65,53 @@
   function wireGlobalLinks() {
     $$('[data-link]').forEach((el) => {
       const key = el.dataset.link;
-      wireLink(el, key.includes('.') ? (key.split('.')[0] && LINKS[key]) || '' : LINKS[key]);
+      const url = LINKS[key] || '';
+      const ok = wireLink(el, url);
+
+      // Discord без ссылки — не мёртвая кнопка, а копирование ника.
+      if (key === 'discord' && !ok) {
+        const handle = (LINKS.discordHandle || '').trim();
+        if (!handle) { el.hidden = true; return; }
+        el.hidden = false;
+        el.href = '#';
+        el.removeAttribute('target');
+        el.classList.add('is-copy');
+        el.title = handle;
+        el.addEventListener('click', (e) => { e.preventDefault(); copyHandle(handle, el); });
+      }
     });
+  }
+
+  /** Копирование ника с подтверждением прямо на кнопке. */
+  async function copyHandle(text, el) {
+    const span = el.querySelector('span');
+    const original = span ? span.textContent : '';
+    let done = false;
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        done = true;
+      }
+    } catch { /* нужен запасной путь */ }
+
+    if (!done) {
+      // execCommand живёт в незащищённом контексте и в старых браузерах
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { done = document.execCommand('copy'); } catch { done = false; }
+      ta.remove();
+    }
+
+    if (span) {
+      span.textContent = done ? t('ct.copied') : text;
+      el.classList.toggle('is-done', done);
+      setTimeout(() => { span.textContent = original; el.classList.remove('is-done'); }, 1800);
+    }
   }
 
   /* ------------------------------------------------------------ ПРОЕКТЫ */
@@ -200,7 +245,11 @@
 
   function observeReveal() {
     const items = $$('.reveal:not(.is-in)');
-    if (reduceMotion || !('IntersectionObserver' in window)) {
+
+    // Страница открыта в фоне: смотреть некому, а IntersectionObserver
+    // в скрытой вкладке может не сработать вовсе. Показываем всё сразу —
+    // иначе кто-то увидит пустоту вместо текста.
+    if (reduceMotion || document.hidden || !('IntersectionObserver' in window)) {
       items.forEach((el) => el.classList.add('is-in'));
       return;
     }
@@ -294,6 +343,41 @@
     document.documentElement.dataset.theme = initial;
   }
 
+  /* --------------------------------------------------- УРОВЕНЬ НАГРУЗКИ */
+
+  /* Идея из Aura: сначала смотрим на систему, потом меряем, и понижаем
+     уровень только если кадры действительно не идут. Не «на всякий случай».
+     Дорогое здесь — backdrop-filter (19 панелей) и полноэкранное зерно. */
+  function perfTier() {
+    const root = document.documentElement;
+    const lite = () => root.setAttribute('data-perf', 'lite');
+
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { lite(); return; }
+    if (!('IntersectionObserver' in window) || !('requestAnimationFrame' in window)) { lite(); return; }
+    if (document.hidden) return;                 // в фоновой вкладке кадры врут
+
+    // даём первой отрисовке закончиться, иначе меряем загрузку, а не страницу
+    setTimeout(() => {
+      const samples = [];
+      let last = performance.now();
+      const started = last;
+
+      const tick = (now) => {
+        samples.push(now - last);
+        last = now;
+        if (now - started < 900 && samples.length < 90) {
+          requestAnimationFrame(tick);
+          return;
+        }
+        if (samples.length < 8) return;          // слишком мало данных — не выносим вердикт
+        const sorted = samples.slice(1).sort((a, b) => a - b);
+        const median = sorted[Math.floor(sorted.length / 2)];
+        if (median > 20) lite();                 // ниже ~50 fps
+      };
+      requestAnimationFrame(tick);
+    }, 350);
+  }
+
   /* --------------------------------------------------------------- СТАРТ */
 
   function boot() {
@@ -305,6 +389,7 @@
     startConsole();
     observeCounters();
     observeNav();
+    perfTier();
 
     $$('.lang-btn').forEach((b) => {
       b.addEventListener('click', () => setLang(b.dataset.setLang));
