@@ -1,13 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+
   "framework": null,
   "buildCommand": null,
   "installCommand": null,
-  "notes": [
-    "Сайт статический: пять файлов, ноль сборки — Vercel отдаёт корень как есть.",
-    "Имена файлов без хеша, поэтому immutable неприменим: правки не доедут до браузера.",
-    "Внешних ресурсов нет — ни шрифтов, ни картинок из сети."
-  ],
+  "outputDirectory": ".",
+
   "headers": [
     {
       "source": "/(.*)",
