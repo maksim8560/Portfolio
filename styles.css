@@ -117,16 +117,28 @@ code {
 }
 @media (max-width: 560px) { .wrap { width: calc(100% - 40px); } }
 
-/* Тонкие кольца-орбиты на фоне, как на референсе */
-.ring {
-  position: absolute;
-  border: 1px solid var(--line-soft);
-  border-radius: 50%;
+/* Топографический фон: 609 контуров одним файлом, лежит поверх
+   цвета body и под всем контентом. Дрейфует только transform —
+   композиторная анимация, перерисовок нет. Запас inset: -6%, чтобы
+   края не заползали в кадр во время дрейфа. */
+.topo {
+  position: fixed; inset: -6%;
+  z-index: -1;
   pointer-events: none;
+  background: url("assets/topo.svg") center / cover no-repeat;
+  opacity: .42;
+  animation: topo-drift 70s var(--ease) infinite alternate;
+  will-change: transform;
 }
-.ring-1 { width: 640px; height: 640px; top: -260px; right: -200px; }
-.ring-2 { width: 420px; height: 420px; top: -120px; right: -80px; }
-.ring-3 { width: 560px; height: 560px; top: -140px; right: -220px; }
+@keyframes topo-drift {
+  from { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+  to   { transform: translate3d(1.5%, 1.5%, 0) scale(1.05); }
+}
+
+/* В светлой теме светлый штрих почти не виден — оставляем едва заметным.
+   Фильтров не вешаем: анимированный transform + filter заставлял бы
+   браузер пересчитывать фильтр каждый кадр. */
+:root[data-theme="light"] .topo { opacity: .1; }
 
 /* ============================ ШАПКА ============================ */
 
@@ -547,9 +559,9 @@ code {
 
 /* ============================ РЕЖИМ ЭКОНОМИИ ============================ */
 
-/* Включается скриптом, если медиана кадра выше 20 мс. Плоскому дизайну
-   почти нечего отключать — гасим кольца и анимации появления. */
-:root[data-perf="lite"] .ring { display: none; }
+/* Включается скриптом, если медиана кадра выше 20 мс. Фон замирает
+   статикой (она бесплатна), плюс гаснут мелкие анимации. */
+:root[data-perf="lite"] .topo { animation: none; opacity: .25; }
 :root[data-perf="lite"] .reveal { opacity: 1; transform: none; transition: none; }
 :root[data-perf="lite"] .cursor { animation: none; }
 :root[data-perf="lite"] .log-line.is-new { animation: none; }
@@ -561,5 +573,6 @@ code {
   .reveal { opacity: 1; transform: none; transition: none; }
   .cursor { animation: none; }
   .log-line, .log-line.is-new { animation: none; }
+  .topo { animation: none; }
   * { scroll-behavior: auto !important; }
 }

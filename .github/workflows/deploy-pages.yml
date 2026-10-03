@@ -29,13 +29,14 @@ jobs:
         with:
           enablement: true
 
-      # Собирать нечего: копируем пять файлов сайта в отдельную папку,
+      # Собирать нечего: копируем файлы сайта в отдельную папку,
       # чтобы в артефакт не попали README, .github и прочее.
       - name: Подготовить статику
         run: |
           mkdir -p _site
           cp index.html styles.css app.js content.js .nojekyll _site/
-          ls -la _site
+          cp -r assets _site/
+          ls -la _site _site/assets
 
       - uses: actions/upload-pages-artifact@v3
         with:
