@@ -49,8 +49,9 @@ ru: {
   'nav.approach': 'Подход',
   'nav.contact': 'Контакты',
 
-  'hero.eyebrow': 'Портфолио · 2026',
-  'hero.title': 'Делаю продукты,<br />которые <em>честно работают</em>',
+  'hero.kicker': '... /Обо мне ...',
+  'hero.line1': 'Инди',
+  'hero.line2': 'разработчик',
   'hero.lead': 'Шифрование, которое действительно шифрует. Загрузки, которые не упираются в лимит платформы. Интерфейс, который не притворяется, что знает больше, чем знает.',
   'hero.cta.work': 'Смотреть проекты',
   'hero.cta.resume': 'Резюме',
@@ -71,12 +72,12 @@ ru: {
   'stats.k3': 'Автоматических проверок',
   'stats.k4': 'UI-фреймворков',
 
-  'work.kicker': '01 — Проекты',
-  'work.title': 'Что сделано',
+  'work.kicker': '... /Проекты ...',
+  'work.title': 'Проекты',
   'work.lead': 'Три продукта, каждый доведён до публичного деплоя. Ниже — не фичи списком, а то, что на самом деле оказалось сложным.',
 
-  'ap.kicker': '02 — Подход',
-  'ap.title': 'Принципы, которые повторяются',
+  'ap.kicker': '... /Подход ...',
+  'ap.title': 'Подход',
   'ap.lead': 'Они выросли из конкретных отказов, а не из методологии. Каждый пункт ниже — это то, что пришлось переделать, потому что «и так работало» оказалось неправдой.',
 
   'ap.c1.t': '«Настроено» ≠ «работает»',
@@ -92,8 +93,9 @@ ru: {
   'ap.c6.t': 'Комментарий — это запись о причине',
   'ap.c6.d': 'В коде ~35–40 % строк — комментарии, и почти каждый объясняет не что делает код, а какой отказ породил эту строку. Через год это единственное, что спасёт, когда архитектуру придётся менять.',
 
-  'ct.kicker': '03 — Контакты',
+  'ct.kicker': '... /Контакты ...',
   'ct.title': 'Давайте поговорим',
+  'ct.note': 'Отвечаю в течение дня',
   'ct.lead': 'Открыт к задачам, где есть нетривиальная инженерная часть: шифрование, realtime, медиапайплайны, деплой на бесплатных тарифах.',
   'ct.discord': 'Discord MaxDiWay',
   'ct.telegram': 'Telegram',
@@ -122,8 +124,9 @@ en: {
   'nav.approach': 'Approach',
   'nav.contact': 'Contact',
 
-  'hero.eyebrow': 'Portfolio · 2026',
-  'hero.title': 'I build products that<br /><em>honestly work</em>',
+  'hero.kicker': '... /About ...',
+  'hero.line1': 'Indie',
+  'hero.line2': 'developer',
   'hero.lead': 'Encryption that actually encrypts. Uploads that never hit a platform limit. An interface that never pretends to know more than it does.',
   'hero.cta.work': 'See the work',
   'hero.cta.resume': 'Résumé',
@@ -144,12 +147,12 @@ en: {
   'stats.k3': 'Automated assertions',
   'stats.k4': 'UI frameworks',
 
-  'work.kicker': '01 — Work',
-  'work.title': 'What got built',
+  'work.kicker': '... /Projects ...',
+  'work.title': 'Projects',
   'work.lead': 'Three products, each one shipped to a public deployment. Below is not a feature list — it is what actually turned out to be hard.',
 
-  'ap.kicker': '02 — Approach',
-  'ap.title': 'Principles that repeat',
+  'ap.kicker': '... /Approach ...',
+  'ap.title': 'Approach',
   'ap.lead': 'They grew out of specific failures, not out of a methodology. Each item below is something that had to be rewritten because "it works fine" turned out to be untrue.',
 
   'ap.c1.t': '"Configured" ≠ "working"',
@@ -165,8 +168,9 @@ en: {
   'ap.c6.t': 'A comment is a record of the reason',
   'ap.c6.d': 'Roughly 35–40 % of these codebases are comments, and almost every one explains not what the line does but which failure produced it. A year from now that is the only thing that saves you when the architecture has to change.',
 
-  'ct.kicker': '03 — Contact',
+  'ct.kicker': '... /Contacts ...',
   'ct.title': 'Let\'s talk',
+  'ct.note': 'I reply within a day',
   'ct.lead': 'Open to work where the engineering is the interesting part: encryption, realtime, media pipelines, deploying on free tiers.',
   'ct.discord': 'Discord MaxDiWay',
   'ct.telegram': 'Telegram',

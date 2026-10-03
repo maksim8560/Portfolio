@@ -84,7 +84,8 @@
 
   /** Копирование ника с подтверждением прямо на кнопке. */
   async function copyHandle(text, el) {
-    const span = el.querySelector('span');
+    // первый span — декоративная точка, текст живёт в последнем
+    const span = el.querySelector('span:last-child');
     const original = span ? span.textContent : '';
     let done = false;
 
@@ -117,8 +118,7 @@
   /* ------------------------------------------------------------ ПРОЕКТЫ */
 
   const ICON = {
-    demo:  '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4h7v7"/><path d="M20 4 10 14"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
-    repo:  '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18-6-6 6-6"/><path d="m15 6 6 6-6 6"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
     apk:   '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>',
   };
 
@@ -140,15 +140,14 @@
     const id = String(i + 1).padStart(2, '0');
 
     const actions = [
-      L.demo ? `<a class="btn btn-primary" data-x="demo">${ICON.demo}<span>${esc(t('p.demo'))}</span></a>` : '',
-      L.apk  ? `<a class="btn btn-primary" data-x="apk">${ICON.apk}<span>${esc(t('p.apk'))}</span></a>` : '',
-      L.repo ? `<a class="btn" data-x="repo">${ICON.repo}<span>${esc(t('p.repo'))}</span></a>` : '',
+      L.demo ? `<a class="btn-pill" data-x="demo"><span>${esc(t('p.demo'))}</span></a><a class="btn-arrow" data-x="demo" aria-label="${esc(pick(p.name))} — ${esc(t('p.demo'))}">${ICON.arrow}</a>` : '',
+      L.apk  ? `<a class="btn-pill" data-x="apk">${ICON.apk}<span>${esc(t('p.apk'))}</span></a>` : '',
     ].filter(Boolean).join('');
 
     const metrics = (p.metrics || []).map((m) => `
       <div class="metric">
-        <dd>${esc(m.v)}</dd>
-        <dt>${esc(pick(m.l))}</dt>
+        <div class="metric-num">${esc(m.v)}</div>
+        <div class="metric-label">${esc(pick(m.l))}</div>
       </div>`).join('');
 
     const chips = (p.stack || []).map((s) => `<li>${esc(s)}</li>`).join('');
@@ -161,24 +160,24 @@
       </div>`).join('');
 
     return `
-      <article class="project glass reveal" id="${esc(p.id)}"
+      <article class="project reveal" id="${esc(p.id)}"
                style="--pa:${p.accent[0]}; --pb:${p.accent[1]}">
-        <div class="project-inner">
+        <div class="project-visual" aria-hidden="true">
+          <span class="project-num">${id}</span>
+          <span class="project-aka">${esc(pick(p.aka))}</span>
+        </div>
+        <div class="project-body">
           <div class="project-head">
-            <span class="project-index">${id}</span>
             <div class="project-titles">
-              <h3 class="project-name">${esc(pick(p.name))}<span class="aka">${esc(pick(p.aka))}</span></h3>
+              <h3 class="project-name">${esc(pick(p.name))}</h3>
               <p class="project-tagline">${esc(pick(p.tagline))}</p>
             </div>
+            <div class="project-actions">${actions}</div>
           </div>
 
-          <div class="project-actions">${actions}</div>
-
-          <p class="sub-h" style="margin-top:28px">${esc(t('p.metrics'))}</p>
-          <div class="metrics">${metrics}</div>
-
-          <p class="sub-h">${esc(t('p.stack'))}</p>
           <ul class="chips">${chips}</ul>
+
+          <div class="metrics">${metrics}</div>
 
           <div class="project-cols">
             <div>
@@ -347,7 +346,8 @@
 
   /* Идея из Aura: сначала смотрим на систему, потом меряем, и понижаем
      уровень только если кадры действительно не идут. Не «на всякий случай».
-     Дорогое здесь — backdrop-filter (19 панелей) и полноэкранное зерно. */
+     Дизайн плоский, без размытий, так что тяжёлого здесь почти нет —
+     режим на случай совсем слабых устройств. */
   function perfTier() {
     const root = document.documentElement;
     const lite = () => root.setAttribute('data-perf', 'lite');
