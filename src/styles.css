@@ -126,6 +126,15 @@ code {
   z-index: -1;
   pointer-events: none;
 }
+/* Канвас эффектов — поверх контента, но клики пропускает.
+   Иначе курсор прячется за карточками, а системный скрыт. */
+.topo-fx {
+  position: fixed; inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+}
 .topo-svg {
   position: absolute; inset: 0;
   opacity: .5;
@@ -135,11 +144,6 @@ code {
   width: 100%;
   height: 100%;
   filter: drop-shadow(0 0 5px rgba(170, 190, 255, .45));
-}
-.topo-fx {
-  position: absolute; inset: 0;
-  width: 100%;
-  height: 100%;
 }
 
 /* Системный курсор прячем, только пока поле активно (класс ставит TopoField).
@@ -403,15 +407,20 @@ button.pill.is-done:hover { background: var(--ink); }
 }
 @media (max-width: 860px) { .project { grid-template-columns: 1fr; } }
 
-/* Цветной бок: градиент проекта + крупный номер */
+/* Бок карточки в общем монохроме: та же панель, номер приглушённым.
+   Цветные градиенты убраны — выбивались из чёрно-белого языка сайта. */
 .project-visual {
   position: relative;
   display: flex; flex-direction: column; justify-content: space-between;
   gap: 12px;
   padding: 26px;
   min-height: 220px;
-  background: linear-gradient(140deg, var(--pa), var(--pb));
-  color: #0c0c0e;
+  background: var(--panel-2);
+  border-right: 1px solid var(--line-soft);
+  color: var(--faint);
+}
+@media (max-width: 860px) {
+  .project-visual { border-right: 0; border-bottom: 1px solid var(--line-soft); min-height: 0; }
 }
 .project-num {
   font-family: var(--mono);
@@ -419,12 +428,10 @@ button.pill.is-done:hover { background: var(--ink); }
   font-weight: 500;
   letter-spacing: -.04em;
   line-height: 1;
-  opacity: .85;
 }
 .project-aka {
   font-family: var(--mono);
   font-size: .78rem;
-  opacity: .75;
 }
 
 .project-body { padding: clamp(22px, 3.4vw, 36px); min-width: 0; }

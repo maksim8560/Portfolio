@@ -342,8 +342,11 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+  <!-- Два слоя: карта с линиями — под контентом, канвас с курсором,
+       шлейфом и рябью — поверх всего. Иначе светящийся курсор тонет
+       за непрозрачными карточками, а системный при этом спрятан. -->
   <div class="topo" aria-hidden="true">
     <div ref="svgHost" class="topo-svg" v-html="svgHtml"></div>
-    <canvas ref="fx" class="topo-fx"></canvas>
   </div>
+  <canvas ref="fx" class="topo-fx" aria-hidden="true"></canvas>
 </template>

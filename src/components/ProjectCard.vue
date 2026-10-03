@@ -39,12 +39,7 @@ function externalAttrs(url: string): Record<string, string> {
 </script>
 
 <template>
-  <article
-    :id="project.id"
-    v-reveal
-    class="project"
-    :style="{ '--pa': project.accent[0], '--pb': project.accent[1] }"
-  >
+  <article :id="project.id" v-reveal class="project">
     <div class="project-visual" aria-hidden="true">
       <span class="project-num">{{ num }}</span>
       <span class="project-aka">{{ project.aka[l] }}</span>

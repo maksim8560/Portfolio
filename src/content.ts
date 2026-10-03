@@ -238,7 +238,6 @@ export interface Cut {
 
 export interface Project {
   id: string
-  accent: [string, string]
   links: () => ProjectLinks
   name: Localized
   aka: Localized
@@ -252,7 +251,6 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     id: 'aura',
-    accent: ['#7c8cff', '#c07cff'],
     links: () => LINKS.aura,
 
     name: { ru: 'Aura', en: 'Aura' },
@@ -336,7 +334,6 @@ export const PROJECTS: Project[] = [
   /* ------------------------------------------------------------------ */
   {
     id: 'sonora',
-    accent: ['#22d3ee', '#4ade80'],
     links: () => LINKS.sonora,
 
     name: { ru: 'Sonora', en: 'Sonora' },
@@ -417,7 +414,6 @@ export const PROJECTS: Project[] = [
   /* ------------------------------------------------------------------ */
   {
     id: 'filedropper',
-    accent: ['#ff9f45', '#ff5c8a'],
     links: () => LINKS.filedropper,
 
     name: { ru: 'FileDropper', en: 'FileDropper' },
