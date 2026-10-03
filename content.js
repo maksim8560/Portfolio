@@ -47,7 +47,6 @@ ru: {
   'nav.role': 'разработчик',
   'nav.work': 'Проекты',
   'nav.approach': 'Подход',
-  'nav.stack': 'Стек',
   'nav.contact': 'Контакты',
 
   'hero.eyebrow': 'Портфолио · 2026',
@@ -93,17 +92,7 @@ ru: {
   'ap.c6.t': 'Комментарий — это запись о причине',
   'ap.c6.d': 'В коде ~35–40 % строк — комментарии, и почти каждый объясняет не что делает код, а какой отказ породил эту строку. Через год это единственное, что спасёт, когда архитектуру придётся менять.',
 
-  'st.kicker': '03 — Стек',
-  'st.title': 'Инструменты',
-  'st.lead': 'Всё, с чем реально работал. Подчёркнуто то, что написано руками, а не взято из коробки.',
-  'st.c1': 'Языки',
-  'st.c2': 'Интерфейс',
-  'st.c3': 'Бэкенд',
-  'st.c4': 'Мобильные',
-  'st.c5': 'Инфраструктура',
-  'st.c6': 'Руками',
-
-  'ct.kicker': '04 — Контакты',
+  'ct.kicker': '03 — Контакты',
   'ct.title': 'Давайте поговорим',
   'ct.lead': 'Открыт к задачам, где есть нетривиальная инженерная часть: шифрование, realtime, медиапайплайны, деплой на бесплатных тарифах.',
   'ct.discord': 'Discord MaxDiWay',
@@ -131,7 +120,6 @@ en: {
   'nav.role': 'developer',
   'nav.work': 'Work',
   'nav.approach': 'Approach',
-  'nav.stack': 'Stack',
   'nav.contact': 'Contact',
 
   'hero.eyebrow': 'Portfolio · 2026',
@@ -177,17 +165,7 @@ en: {
   'ap.c6.t': 'A comment is a record of the reason',
   'ap.c6.d': 'Roughly 35–40 % of these codebases are comments, and almost every one explains not what the line does but which failure produced it. A year from now that is the only thing that saves you when the architecture has to change.',
 
-  'st.kicker': '03 — Stack',
-  'st.title': 'Tools',
-  'st.lead': 'Everything actually worked with. What was written by hand rather than unboxed is called out.',
-  'st.c1': 'Languages',
-  'st.c2': 'Interface',
-  'st.c3': 'Backend',
-  'st.c4': 'Mobile',
-  'st.c5': 'Infrastructure',
-  'st.c6': 'By hand',
-
-  'ct.kicker': '04 — Contact',
+  'ct.kicker': '03 — Contact',
   'ct.title': 'Let\'s talk',
   'ct.lead': 'Open to work where the engineering is the interesting part: encryption, realtime, media pipelines, deploying on free tiers.',
   'ct.discord': 'Discord MaxDiWay',
