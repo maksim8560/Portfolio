@@ -1,9 +1,14 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "notes": [
-    "Сайт на Vue 3 + TypeScript (Vite). Сборку и каталог выдачи Vercel определяет сам.",
-    "Имена файлов с хешем, поэтому immutable неприменим только к index.html."
+    "Сайт на Vue 3 + TypeScript (Vite). Поля сборки заданы явно, потому что",
+    "проект создавался как статика без сборки и Vercel запомнил эти настройки",
+    "в дашборде — автодетект их не перебивает."
   ],
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "outputDirectory": "dist",
   "headers": [
     {
       "source": "/(.*)",
