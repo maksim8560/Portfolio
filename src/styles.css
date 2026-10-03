@@ -125,7 +125,10 @@ code {
   position: fixed; inset: -6%;
   z-index: -1;
   pointer-events: none;
-  background: url("assets/topo.svg") center / cover no-repeat;
+  /* картинку подставляет Vue инлайном: адрес выдаёт сборщик */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   opacity: .42;
   animation: topo-drift 70s var(--ease) infinite alternate;
   will-change: transform;
@@ -262,6 +265,10 @@ code {
               background var(--d1) var(--ease), transform var(--d1) var(--ease);
 }
 .pill:hover { color: var(--ink); border-color: var(--faint); transform: translateY(-1px); }
+/* Discord без ссылки — настоящий <button>, сбрасываем браузерное */
+button.pill { font: inherit; background: transparent; }
+button.pill:hover { background: transparent; }
+button.pill.is-done:hover { background: var(--ink); }
 .pill-dot {
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--faint);

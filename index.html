@@ -16,214 +16,17 @@
 <meta name="twitter:card" content="summary_large_image" />
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230a0a0b'/%3E%3Cpath d='M14 45V19l11 15 11-15v26' stroke='%23f4f3ee' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
-
-<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-<a class="skip" href="#work" data-i18n="a11y.skip">К проектам</a>
-
-<div class="topo" aria-hidden="true"></div>
-
-<!-- ============================ HEADER ============================ -->
-  <header class="topbar" id="topbar">
-    <a class="brand" href="#top">
-      <b data-i18n="nav.name">MaxDiWay (Максим)</b>
-      <i data-i18n="nav.role">разработчик</i>
-    </a>
-
-    <nav class="nav" aria-label="Разделы">
-      <a href="#work"     data-i18n="nav.work">Проекты</a>
-      <a href="#approach" data-i18n="nav.approach">Подход</a>
-      <a href="#contact"  data-i18n="nav.contact">Контакты</a>
-    </nav>
-
-    <div class="lang" role="group" aria-label="Язык / Language">
-      <button type="button" class="lang-btn" data-set-lang="ru" aria-pressed="true">Ru</button>
-      <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="false">En</button>
-    </div>
-  </header>
-
-  <main id="top">
-
-    <!-- ============================ HERO ============================ -->
-    <section class="hero">
-      <div class="wrap">
-      <p class="kicker reveal" data-i18n="hero.kicker">... /Обо мне ...</p>
-
-      <h1 class="display reveal">
-        <span class="display-line" data-i18n="hero.line1">Инди</span>
-        <span class="display-row">
-          <a class="btn-pill" href="#work"><span data-i18n="hero.cta.work">Смотреть проекты</span></a>
-          <a class="btn-arrow" href="#work" aria-label="К проектам">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </span>
-        <span class="display-line right" data-i18n="hero.line2">разработчик</span>
-      </h1>
-
-      <p class="hero-lead reveal" data-i18n="hero.lead">
-        Шифрование, которое действительно шифрует. Загрузки, которые не упираются
-        в лимит платформы. Интерфейс, который не притворяется, что знает больше,
-        чем знает.
-      </p>
-
-      <div class="socials reveal">
-        <a class="pill" data-link="discord" href="#" hidden>
-          <span class="pill-dot" aria-hidden="true"></span><span data-i18n="ct.discord">Discord MaxDiWay</span>
-        </a>
-        <a class="pill" data-link="telegram" href="#" hidden>
-          <span class="pill-dot" aria-hidden="true"></span><span data-i18n="ct.telegram">Telegram</span>
-        </a>
-      </div>
-
-      <aside class="log reveal" aria-label="Рабочий журнал">
-        <div class="log-head">
-          <span class="log-title" data-i18n="hero.console">рабочий журнал</span>
-        </div>
-        <ol class="log-body" id="consoleBody"></ol>
-      </aside>
-      </div>
-    </section>
-
-    <!-- ============================ STATS ============================ -->
-    <section class="stats-wrap" aria-label="Цифры">
-      <div class="stats" id="stats">
-        <div class="stat reveal"><div class="stat-num"><span data-count="3">3</span></div><div class="stat-label" data-i18n="stats.k1">Проекта в продакшене</div></div>
-        <div class="stat reveal"><div class="stat-num"><span data-count="59000" data-count-format="k">59 000</span></div><div class="stat-label" data-i18n="stats.k2">Строк кода</div></div>
-        <div class="stat reveal"><div class="stat-num"><span data-count="600" data-count-suffix="+">600+</span></div><div class="stat-label" data-i18n="stats.k3">Автоматических проверок</div></div>
-        <div class="stat reveal"><div class="stat-num"><span data-count="0">0</span></div><div class="stat-label" data-i18n="stats.k4">UI-фреймворков</div></div>
-      </div>
-    </section>
-
-    <!-- ============================ WORK ============================ -->
-    <section class="section" id="work">
-      <div class="wrap">
-      <p class="kicker reveal" data-i18n="work.kicker">... /Проекты ...</p>
-      <h2 class="mega right reveal" data-i18n="work.title">Проекты</h2>
-      <p class="section-lead reveal" data-i18n="work.lead">
-        Три продукта, каждый доведён до публичного деплоя. Ниже — не фичи списком,
-        а то, что на самом деле оказалось сложным.
-      </p>
-
-      <div class="projects" id="projects">
-        <noscript>
-          <p class="noscript-note">
-            Для списка проектов нужен JavaScript. Живые версии:
-            <a href="https://aura-messenger-q5yk.onrender.com/" target="_blank" rel="noopener">Aura</a>,
-            <a href="https://maksim8560.github.io/music-app/" target="_blank" rel="noopener">Sonora</a>,
-            <a href="https://filedropper-api.sonora-online.workers.dev/#/" target="_blank" rel="noopener">FileDropper</a>.
-          </p>
-        </noscript>
-      </div>
-      </div>
-    </section>
-
-    <!-- ============================ APPROACH ============================ -->
-    <section class="section" id="approach">
-      <div class="wrap">
-      <p class="kicker reveal" data-i18n="ap.kicker">... /Подход ...</p>
-      <h2 class="mega reveal" data-i18n="ap.title">Подход</h2>
-      <p class="section-lead reveal" data-i18n="ap.lead">
-        Принципы выросли из конкретных отказов, а не из методологии. Каждый пункт
-        ниже — это то, что пришлось переделать, потому что «и так работало»
-        оказалось неправдой.
-      </p>
-
-      <ul class="creeds">
-        <li class="creed reveal">
-          <span class="creed-num">01</span>
-          <h3 data-i18n="ap.c1.t">«Настроено» ≠ «работает»</h3>
-          <p data-i18n="ap.c1.d">
-            Зеркало, TURN, хранилище, почта — каждая подсистема отдаёт
-            <code>configured</code> и <code>reachable</code> отдельными полями.
-            Потому что однажды хранилище отвечало 502 целый день, а код проверял
-            только, что переменные окружения проставлены.
-          </p>
-        </li>
-        <li class="creed reveal">
-          <span class="creed-num">02</span>
-          <h3 data-i18n="ap.c2.t">Долговечность важнее удобства API</h3>
-          <p data-i18n="ap.c2.d">
-            «Отправлено» значит «сохранено». Ответ клиенту ждёт, пока запись
-            действительно легла на диск и в зеркало. Тест растягивает окно до трёх
-            секунд, убивает процесс <code>SIGKILL</code> внутри него и требует, чтобы
-            переписка вернулась целиком.
-          </p>
-        </li>
-        <li class="creed reveal">
-          <span class="creed-num">03</span>
-          <h3 data-i18n="ap.c3.t">Честный интерфейс лучше красивого</h3>
-          <p data-i18n="ap.c3.d">
-            Счётчик посетителей не показывает ноль, пока сервер не ответил «нет
-            данных». Плеер не рисует спектрограмму у потока, который не прошёл
-            через аудио-граф. Если система деградировала — на странице висит
-            табличка с командой, которую надо выполнить, а не пустая 500.
-          </p>
-        </li>
-        <li class="creed reveal">
-          <span class="creed-num">04</span>
-          <h3 data-i18n="ap.c4.t">Зависимость — это решение</h3>
-          <p data-i18n="ap.c4.d">
-            Один из проектов живёт вообще без npm-пакетов: свой бандлер, свой
-            парсер ID3, свой STUN/TURN-клиент, свой PRNG. Не из любви к аскетизму —
-            а потому что лишняя зависимость в чужом реестре обновляется не в твой
-            день релизов.
-          </p>
-        </li>
-        <li class="creed reveal">
-          <span class="creed-num">05</span>
-          <h3 data-i18n="ap.c5.t">Тест, который не может упасть, — не тест</h3>
-          <p data-i18n="ap.c5.d">
-            Один из скриптов проверки админки печатал отчёт и всегда завершался с
-            нулём — он ничего не проверял. Другой держит зеркало на 800 мс, чтобы
-            окно стало фактом, а не гонкой. Третий поднимает настоящий SMTP-сервер,
-            чтобы проверить отправку кода.
-          </p>
-        </li>
-        <li class="creed reveal">
-          <span class="creed-num">06</span>
-          <h3 data-i18n="ap.c6.t">Комментарий — это запись о причине</h3>
-          <p data-i18n="ap.c6.d">
-            В коде ~35–40 % строк — комментарии, и почти каждый объясняет не что
-            делает код, а какой отказ породил эту строку. Через год это единственное,
-            что спасёт, когда архитектуру придётся менять.
-          </p>
-        </li>
-      </ul>
-      </div>
-    </section>
-
-    <!-- ============================ CONTACT ============================ -->
-    <section class="section" id="contact">
-      <div class="wrap">
-      <p class="kicker reveal" data-i18n="ct.kicker">... /Контакты ...</p>
-      <h2 class="mega reveal" data-i18n="ct.title">Давайте поговорим</h2>
-      <p class="section-lead reveal" data-i18n="ct.lead">
-        Открыт к задачам, где есть нетривиальная инженерная часть: шифрование,
-        realtime, медиапайплайны, деплой на бесплатных тарифах.
-      </p>
-
-      <div class="socials reveal">
-        <a class="pill pill-big" data-link="discord" href="#" hidden>
-          <span class="pill-dot" aria-hidden="true"></span><span data-i18n="ct.discord">Discord MaxDiWay</span>
-        </a>
-        <a class="pill pill-big" data-link="telegram" href="#" hidden>
-          <span class="pill-dot" aria-hidden="true"></span><span data-i18n="ct.telegram">Telegram</span>
-        </a>
-      </div>
-
-      <p class="work-note reveal" data-i18n="ct.note">Отвечаю в течение дня</p>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <p data-i18n="footer.note">Сделано без фреймворков и сборщиков — так же, как проекты на этой странице.</p>
-    <p class="footer-meta"><span id="year">2026</span></p>
-  </footer>
-
+<div id="app"></div>
+<noscript>
+  <p style="font-family:monospace;padding:24px">
+    Для сайта нужен JavaScript. Живые проекты:
+    <a href="https://aura-messenger-q5yk.onrender.com/">Aura</a>,
+    <a href="https://maksim8560.github.io/music-app/">Sonora</a>,
+    <a href="https://filedropper-api.sonora-online.workers.dev/#/">FileDropper</a>.
+  </p>
+</noscript>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -232,7 +35,6 @@
   "alternateName": "Максим"
 }
 </script>
-<script src="content.js"></script>
-<script src="app.js"></script>
+<script type="module" src="/src/main.ts"></script>
 </body>
 </html>

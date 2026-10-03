@@ -1,11 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-
-  "framework": null,
-  "buildCommand": null,
-  "installCommand": null,
-  "outputDirectory": ".",
-
+  "notes": [
+    "Сайт на Vue 3 + TypeScript (Vite). Сборку и каталог выдачи Vercel определяет сам.",
+    "Имена файлов с хешем, поэтому immutable неприменим только к index.html."
+  ],
   "headers": [
     {
       "source": "/(.*)",

@@ -24,23 +24,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Поставить зависимости
+        run: npm ci
+
+      # Проверка типов отдельно от сборки: в логе видно, что именно упало.
+      - name: Проверка типов
+        run: npm run typecheck
+
+      - name: Сборка
+        run: npm run build
+
       - name: Настроить Pages
         uses: actions/configure-pages@v5
         with:
           enablement: true
 
-      # Собирать нечего: копируем файлы сайта в отдельную папку,
-      # чтобы в артефакт не попали README, .github и прочее.
-      - name: Подготовить статику
-        run: |
-          mkdir -p _site
-          cp index.html styles.css app.js content.js .nojekyll _site/
-          cp -r assets _site/
-          ls -la _site _site/assets
-
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: '_site'
+          path: 'dist'
 
       - id: deployment
         uses: actions/deploy-pages@v4
