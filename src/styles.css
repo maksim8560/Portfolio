@@ -117,31 +117,39 @@ code {
 }
 @media (max-width: 560px) { .wrap { width: calc(100% - 40px); } }
 
-/* Топографический фон: 609 контуров одним файлом, лежит поверх
-   цвета body и под всем контентом. Дрейфует только transform —
-   композиторная анимация, перерисовок нет. Запас inset: -6%, чтобы
-   края не заползали в кадр во время дрейфа. */
+/* Интерактивное топографическое поле: 609 контуров инлайном лежат поверх
+   цвета body и под всем контентом. Линии светятся холодным (drop-shadow),
+   курсор их расталкивает, шлейф и рябь рисуются на канвасе поверх.
+   Живёт только пока двигается мышь — в покое цикл спит и стоит ноль. */
 .topo {
-  position: fixed; inset: -6%;
+  position: fixed; inset: 0;
   z-index: -1;
   pointer-events: none;
-  /* картинку подставляет Vue инлайном: адрес выдаёт сборщик */
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  opacity: .42;
-  animation: topo-drift 70s var(--ease) infinite alternate;
-  will-change: transform;
 }
-@keyframes topo-drift {
-  from { transform: translate3d(-1.5%, -1%, 0) scale(1); }
-  to   { transform: translate3d(1.5%, 1.5%, 0) scale(1.05); }
+.topo-svg {
+  position: absolute; inset: 0;
+  opacity: .5;
+}
+.topo-svg svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 5px rgba(170, 190, 255, .45));
+}
+.topo-fx {
+  position: absolute; inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
-/* В светлой теме светлый штрих почти не виден — оставляем едва заметным.
-   Фильтров не вешаем: анимированный transform + filter заставлял бы
-   браузер пересчитывать фильтр каждый кадр. */
-:root[data-theme="light"] .topo { opacity: .1; }
+/* Системный курсор прячем, только пока поле активно (класс ставит TopoField).
+   Рисованный светящийся курсор живёт на том же канвасе. */
+html.fx-cursor,
+html.fx-cursor * { cursor: none !important; }
+
+/* В светлой теме светлый штрих почти не виден — оставляем едва заметным. */
+:root[data-theme="light"] .topo-svg { opacity: .14; }
+:root[data-theme="light"] .topo-svg svg { filter: none; }
 
 /* ============================ ШАПКА ============================ */
 
@@ -568,7 +576,8 @@ button.pill.is-done:hover { background: var(--ink); }
 
 /* Включается скриптом, если медиана кадра выше 20 мс. Фон замирает
    статикой (она бесплатна), плюс гаснут мелкие анимации. */
-:root[data-perf="lite"] .topo { animation: none; opacity: .25; }
+:root[data-perf="lite"] .topo-svg svg { filter: none; }
+:root[data-perf="lite"] .topo-fx { display: none; }
 :root[data-perf="lite"] .reveal { opacity: 1; transform: none; transition: none; }
 :root[data-perf="lite"] .cursor { animation: none; }
 :root[data-perf="lite"] .log-line.is-new { animation: none; }
@@ -580,6 +589,6 @@ button.pill.is-done:hover { background: var(--ink); }
   .reveal { opacity: 1; transform: none; transition: none; }
   .cursor { animation: none; }
   .log-line, .log-line.is-new { animation: none; }
-  .topo { animation: none; }
+  .topo-fx { display: none; }
   * { scroll-behavior: auto !important; }
 }

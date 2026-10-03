@@ -6,7 +6,7 @@ import { vCount, vReveal } from './directives'
 import ConsoleLog from './components/ConsoleLog.vue'
 import DiscordButton from './components/DiscordButton.vue'
 import ProjectCard from './components/ProjectCard.vue'
-import topoUrl from './assets/topo.svg'
+import TopoField from './components/TopoField.vue'
 
 const { lang, setLang, t } = useLang()
 
@@ -14,9 +14,6 @@ const year = new Date().getFullYear()
 
 const reduceMotion =
   typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches
-
-/* ---------- фон: адрес выдаёт сборщик, поэтому мимо CSS ---------- */
-const topoStyle = computed(() => ({ backgroundImage: `url("${topoUrl}")` }))
 
 /* ---------- язык в <html lang> ---------- */
 watch(
@@ -134,7 +131,7 @@ onMounted(perfTier)
 <template>
   <a class="skip" href="#work">{{ t('a11y.skip') }}</a>
 
-  <div class="topo" aria-hidden="true" :style="topoStyle"></div>
+  <TopoField />
 
   <!-- ============================ HEADER ============================ -->
   <header class="topbar" id="topbar">
